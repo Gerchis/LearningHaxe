@@ -2,7 +2,7 @@
 -lib heaps
 -lib format
 -lib hldx
--hl game.hl
+-hl out/game.hl
 -main Main
 -D windowSize=1366x768
 -debug

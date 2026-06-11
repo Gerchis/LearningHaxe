@@ -4,6 +4,6 @@ import components.Component.EntityComponent;
 
 class DebugComponent extends EntityComponent {
     public function new() {
-        trace(get_name());
+        trace("New " + get_name());
     }
 }

@@ -22,6 +22,6 @@ class MoverComponent extends EntityComponent implements IOnEntityReady implement
 
         var movement: Point = vector_reciver();
         trace(movement);
-        root_entity.root_object.move(movement.x * 10.0, movement.y * 10.0);
+        root_entity.move(movement.x * 10.0, movement.y * 10.0);
     }
 }

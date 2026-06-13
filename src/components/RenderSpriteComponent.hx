@@ -27,6 +27,6 @@ class RenderSpriteComponent extends EntityComponent implements IOnEntityReady {
         texture.dx = -Std.int(texture.width / 2.0);
         texture.dy = -Std.int(texture.height / 2.0);
 
-        entity.add_child(sprite);
+        entity.addChild(sprite);
     }
 }

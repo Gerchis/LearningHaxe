@@ -1,5 +1,7 @@
 package entities;
 
+import grid.Grid;
+import h2d.col.Point;
 import components.interfaces.IOnUpdate;
 import components.interfaces.IOnDestroy;
 import h2d.Object;
@@ -7,20 +9,14 @@ import components.interfaces.IOnEntityReady;
 import shared.Types.GridCoord;
 import components.Component.EntityComponent;
 
-class GridEntity {
-    public var root_object: Object;
-    var cood: GridCoord;
+class GridEntity extends Object{
+    var coord: GridCoord;
     var components: Map<String, EntityComponent> = new Map();
 
     var is_ready: Bool = false;
     var on_ready: Array<IOnEntityReady> = [];
     var on_update: Array<IOnUpdate> = [];
     var on_destroy: Array<IOnDestroy> = [];
-
-    public function new() {
-        root_object = new Object();
-        Main.app.s2d.addChild(root_object);//TODO: Scene system
-    }
 
     public function add_component(new_component: EntityComponent): GridEntity{
         if (components.exists(new_component.get_name())) return this;
@@ -40,6 +36,16 @@ class GridEntity {
         return cast components.get(k);
     }
 
+    public function set_coord(new_coord: GridCoord) {
+        coord = new_coord;
+    }
+
+    public function apply_coord() {
+        var new_pos: Point = Grid.current_grid.grid_ccord_to_position(coord);
+        x = new_pos.x;
+        y = new_pos.y;
+    }
+
     public function ready(): GridEntity {
         if (is_ready) return this;
 
@@ -50,10 +56,6 @@ class GridEntity {
         is_ready = true;
 
         return this;
-    }
-
-    public function add_child(new_child: Object) {
-        root_object.addChild(new_child);
     }
 
     public function update(delta: Float) {

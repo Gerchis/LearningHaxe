@@ -1,4 +1,4 @@
-package components.interfaces;
+package signals;
 
 import entities.GridEntity;
 

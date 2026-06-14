@@ -1,10 +1,10 @@
 package components;
 
 import entities.GridEntity;
-import components.interfaces.IOnEntityReady;
+import signals.IOnEntityReady;
 import h2d.col.Point;
 import globals.InputMap;
-import components.interfaces.IOnDestroy;
+import signals.IOnDestroy;
 import hxd.Event;
 import hxd.Window;
 import components.Component.EntityComponent;

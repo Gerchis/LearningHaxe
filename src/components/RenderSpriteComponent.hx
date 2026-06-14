@@ -2,7 +2,7 @@ package components;
 
 import h2d.Object;
 import entities.GridEntity;
-import components.interfaces.IOnEntityReady;
+import signals.IOnEntityReady;
 import hxd.res.Image;
 import h2d.Bitmap;
 import h2d.Tile;

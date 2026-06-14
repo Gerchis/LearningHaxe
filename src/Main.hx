@@ -1,9 +1,11 @@
-import components.interfaces.IOnUpdate;
+import signals.Signal.SignalWithArg;
+import signals.IOnUpdate;
 import scenes.DevScene;
 import hxd.Res;
 
 class Main extends hxd.App {
     public static var app: Main;
+    public var on_update: SignalWithArg<Float> = new SignalWithArg<Float>();
 
     override function init() {
         super.init();
@@ -15,10 +17,7 @@ class Main extends hxd.App {
     override function update(dt:Float) {
         super.update(dt);
 
-        if (Std.isOfType(s2d, IOnUpdate)) {
-            var scene_to_update: IOnUpdate = cast s2d;
-            scene_to_update.on_update(dt);
-        }
+        on_update.emit(dt);
     }
 
     static function main() {

@@ -2,7 +2,6 @@ package scenes;
 
 import shared.Types.GridCoord;
 import grid.Grid;
-import components.interfaces.IOnUpdate;
 import h2d.Scene;
 import hxd.Res;
 import components.MoverComponent;
@@ -11,7 +10,7 @@ import components.RenderSpriteComponent;
 import components.DebugComponent;
 import entities.GridEntity;
 
-class DevScene extends Scene implements IOnUpdate{
+class DevScene extends Scene{
     var test_entity: GridEntity;
     var entities: Array<GridEntity> = [];
 
@@ -30,8 +29,5 @@ class DevScene extends Scene implements IOnUpdate{
         grid.add_entity_at(new_entity, new GridCoord(1,1));
         addChild(new_entity);
         entities.push(new_entity);
-    }
-
-    public function on_update(delta:Float) {
     }
 }

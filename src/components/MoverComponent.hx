@@ -1,8 +1,8 @@
 package components;
 
 import entities.GridEntity;
-import components.interfaces.IOnEntityReady;
-import components.interfaces.IOnUpdate;
+import signals.IOnEntityReady;
+import signals.IOnUpdate;
 import h2d.col.Point;
 import components.Component.EntityComponent;
 
@@ -11,7 +11,9 @@ class MoverComponent extends EntityComponent implements IOnEntityReady implement
 
     var root_entity: GridEntity;
 
-    public function new(){};
+    public function new(){
+        Main.app.on_update.subscribe(on_update);
+    };
 
     public function on_entity_ready(entity: GridEntity) {
         root_entity = entity;

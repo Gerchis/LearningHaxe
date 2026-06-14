@@ -1,11 +1,12 @@
 package entities;
 
+import signals.Signal;
 import grid.Grid;
 import h2d.col.Point;
-import components.interfaces.IOnUpdate;
-import components.interfaces.IOnDestroy;
+import signals.IOnUpdate;
+import signals.IOnDestroy;
 import h2d.Object;
-import components.interfaces.IOnEntityReady;
+import signals.IOnEntityReady;
 import shared.Types.GridCoord;
 import components.Component.EntityComponent;
 
@@ -14,9 +15,8 @@ class GridEntity extends Object{
     var components: Map<String, EntityComponent> = new Map();
 
     var is_ready: Bool = false;
-    var on_ready: Array<IOnEntityReady> = [];
-    var on_update: Array<IOnUpdate> = [];
-    var on_destroy: Array<IOnDestroy> = [];
+    var on_ready: SignalWithArg<GridEntity> = new SignalWithArg<GridEntity>();
+    var on_destroy: Signal = new Signal();
 
     public function add_component(new_component: EntityComponent): GridEntity{
         if (components.exists(new_component.get_name())) return this;
@@ -49,21 +49,17 @@ class GridEntity extends Object{
     public function ready(): GridEntity {
         if (is_ready) return this;
 
-        subscribe_events();
+        porocess_entity_events();
 
-        emit_event(on_ready, (f: IOnEntityReady)-> f.on_entity_ready(this));
+        on_ready.emit(this);
         
         is_ready = true;
 
         return this;
     }
 
-    public function update(delta: Float) {
-        emit_event(on_update, (f: IOnUpdate)-> f.on_update(delta));
-    }
-
     public function destroy(): Void {
-        emit_event(on_destroy, (f: IOnDestroy) -> f.on_destroy());
+        on_destroy.emit();
     }
 
     function get_components_with_event<T>(event: Class<T>): Array<T> {
@@ -78,15 +74,15 @@ class GridEntity extends Object{
         return result;
     }
 
-    function subscribe_events() {
-        on_ready = get_components_with_event(IOnEntityReady);
-        on_update = get_components_with_event(IOnUpdate);
-        on_destroy = get_components_with_event(IOnDestroy);
-    }
-
-    function emit_event<T>(events: Array<T>, caller: T -> Void): Void {
-        for (event in events){
-            caller(event);
+    function porocess_entity_events() {
+        var on_ready_components: Array<IOnEntityReady> = get_components_with_event(IOnEntityReady);
+        for (component in on_ready_components) {
+            on_ready.subscribe(component.on_entity_ready);
         }
-    }
+
+        var on_destroy_components: Array<IOnDestroy> = get_components_with_event(IOnDestroy);
+        for (component in on_destroy_components) {
+            on_destroy.subscribe(component.on_destroy);
+        } 
+    }    
 }

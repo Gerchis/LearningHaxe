@@ -21,6 +21,7 @@ class Grid extends Object{
     var cell_heigth: Float = 1.0;
 
     var renderer: SpriteBatch;
+    
 
     public function new(columns:Int, rows:Int, cell_width: Float, cell_heigth: Float, parent: Object) {
         super(parent);
@@ -41,9 +42,9 @@ class Grid extends Object{
         entities.push(new_entity);
     }
 
-    public function grid_ccord_to_position(coord: GridCoord): Point {
-        var x_pos: Float = (coord.x * cell_width) + (cell_width/2.0);
-        var y_pos: Float = (coord.y * cell_width) + (cell_heigth/2.0);
+    public function grid_coord_to_position(coord: GridCoord): Point {
+        var x_pos: Float = (coord.x * cell_width);
+        var y_pos: Float = (coord.y * cell_heigth);
 
         return new Point(x_pos, y_pos);
     }

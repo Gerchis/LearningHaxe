@@ -21,12 +21,12 @@ class DevScene extends Scene{
 
         var new_entity: GridEntity = new GridEntity()
         .add_component(new DebugComponent())
-        .add_component(new RenderSpriteComponent(Res.haxe_logo))
+        .add_component(new RenderSpriteComponent(Res.char))
         .add_component(new InputComponent())
         .add_component(new MoverComponent())
         .ready();
 
-        grid.add_entity_at(new_entity, new GridCoord(1,1));
+        grid.add_entity_at(new_entity, new GridCoord(10, 10));
         addChild(new_entity);
         entities.push(new_entity);
     }

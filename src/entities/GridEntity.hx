@@ -40,8 +40,12 @@ class GridEntity extends Object{
         coord = new_coord;
     }
 
+    public function get_coord(): GridCoord {
+        return coord;
+    }
+
     public function apply_coord() {
-        var new_pos: Point = Grid.current_grid.grid_ccord_to_position(coord);
+        var new_pos: Point = Grid.current_grid.grid_coord_to_position(coord);
         x = new_pos.x;
         y = new_pos.y;
     }

@@ -7,3 +7,4 @@ class GridCoord extends IPoint{
         super(x_coord, y_coord);
     }
 }
+

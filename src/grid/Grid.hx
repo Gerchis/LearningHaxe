@@ -1,5 +1,6 @@
 package grid;
 
+import h2d.Layers;
 import h2d.col.Point;
 import shared.Types.GridCoord;
 import hxd.Res;
@@ -10,7 +11,7 @@ import hxd.res.Image;
 import h2d.SpriteBatch;
 import entities.GridEntity;
 
-class Grid extends Object{
+class Grid extends Layers{
     static public var current_grid: Grid;
     public var entities: Array<GridEntity> = [];
 
@@ -23,8 +24,8 @@ class Grid extends Object{
     var renderer: SpriteBatch;
     
 
-    public function new(columns:Int, rows:Int, cell_width: Float, cell_heigth: Float, parent: Object) {
-        super(parent);
+    public function new(columns:Int, rows:Int, cell_width: Float, cell_heigth: Float) {
+        super();
         this.columns = columns;
         this.rows = rows;
         this.cell_width = cell_width;
@@ -36,7 +37,7 @@ class Grid extends Object{
     }
 
     public function add_entity_at(new_entity: GridEntity, coord: GridCoord) {
-        addChild(new_entity);
+        add(new_entity, 1);
         new_entity.set_coord(coord);
         new_entity.apply_coord();
         entities.push(new_entity);
@@ -57,8 +58,8 @@ class Grid extends Object{
         var cell_tile: Tile = cell_image.toTile();
         cell_tile.dx = -(cell_tile.width/2.0);
         cell_tile.dy = -(cell_tile.height/2.0);
-        renderer = new SpriteBatch(cell_tile, parent);
-        
+        renderer = new SpriteBatch(cell_tile);
+        add(renderer, 0);// TODO: Layer system
 
         for (i in 0...(columns*rows)){
             var cell: CellRender = new CellRender(

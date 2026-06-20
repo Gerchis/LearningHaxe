@@ -1,33 +1,31 @@
 package scenes;
 
+import entities.Player;
 import shared.Types.GridCoord;
 import grid.Grid;
 import h2d.Scene;
-import hxd.Res;
-import components.MoverComponent;
-import components.InputComponent;
-import components.RenderSpriteComponent;
-import components.DebugComponent;
 import entities.GridEntity;
 
 class DevScene extends Scene{
-    var test_entity: GridEntity;
     var entities: Array<GridEntity> = [];
 
     override public function new() {
         super();
+        
+        var grid = new Grid(50, 50, 32.0, 16.0);
+        add(grid, 0);
 
-        var grid: Grid = new Grid(50, 50, 32.0, 16.0, this);
+        var player: Player = PlayerFactory.create_dev();
 
-        var new_entity: GridEntity = new GridEntity()
-        .add_component(new DebugComponent())
-        .add_component(new RenderSpriteComponent(Res.char))
-        .add_component(new InputComponent())
-        .add_component(new MoverComponent())
-        .ready();
+        grid.add_entity_at(player, new GridCoord(10, 10));
 
-        grid.add_entity_at(new_entity, new GridCoord(10, 10));
-        addChild(new_entity);
-        entities.push(new_entity);
+        printTree(this);
+    }
+
+    function printTree(obj: h2d.Object, indent: String = ""): Void {
+        trace(indent + obj.name + " (" + Type.getClassName(Type.getClass(obj)) + ")");
+        for (i in 0...obj.numChildren) {
+            printTree(obj.getChildAt(i), indent + "  ");
+        }
     }
 }
